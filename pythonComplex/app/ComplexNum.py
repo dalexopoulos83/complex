@@ -10,35 +10,44 @@ class ComplexNum:
         self.imag = imag
 
     def __str__(self):
-        return "%d+%dj" % (self.real, self.imag)
+        if self.imag < 0:
+            if isinstance(self.real, float):
+                return "%f%fj" % (self.real, self.imag)
+            else:
+                return "%d%d" % (self.real, self.imag)
+        else:
+            if isinstance(self.real, float):
+                return "%f+%fj" % (self.real, self.imag)
+            else:
+                return "%d+%d" % (self.real, self.imag)
 
     def __add__(self, complex_b):
-        if isinstance(complex_b, int):
+        if isinstance(complex_b, int) or isinstance(complex_b, float):
             complex_b = ComplexNum(complex_b)
         real = self.real + complex_b.real
         imaginary = self.imag + complex_b.imag
         return ComplexNum(real, imaginary)
 
     def __sub__(self, complex_b):
-        if isinstance(complex_b, int):
+        if isinstance(complex_b, int) or isinstance(complex_b, float):
             complex_b = ComplexNum(complex_b)
         real = self.real - complex_b.real
         imaginary = self.imag - complex_b.imag
         return ComplexNum(real, imaginary)
 
     def __mul__(self, complex_b):
-        if isinstance(complex_b, int):
+        if isinstance(complex_b, int) or isinstance(complex_b, float):
             complex_b = ComplexNum(complex_b)
         real = self.real * complex_b.real - self.imag * complex_b.imag
         imaginary = self.real * complex_b.imag + complex_b.real * self.imag
         return ComplexNum(real, imaginary)
 
     def __truediv__(self, complex_b):
-        if isinstance(complex_b, int):
+        if isinstance(complex_b, int) or isinstance(complex_b, float):
             complex_b = ComplexNum(complex_b)
         real_t = self.real * complex_b.real + self.imag * complex_b.imag
         real = real_t / (complex_b.real ** 2 + complex_b.imag ** 2)
-        imaginary_t = self.real * complex_b.imag - self.imag
+        imaginary_t = self.imag * complex_b.real - self.real * complex_b.imag
         imaginary = imaginary_t / (complex_b.real ** 2 + complex_b.imag ** 2)
         return ComplexNum(real, imaginary)
 
