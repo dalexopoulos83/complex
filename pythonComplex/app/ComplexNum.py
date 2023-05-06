@@ -1,6 +1,7 @@
 
 """ Simply Python implementation to support complex numbers
     and the basic mathematical operations """
+import numbers
 
 
 class ComplexNum:
@@ -8,18 +9,25 @@ class ComplexNum:
     def __init__(self, real, imag=0):
         self.real = real
         self.imag = imag
+        if not isinstance(self.real, numbers.Number) or not isinstance(self.imag, numbers.Number):
+            print("Only numerical types supported")
+            raise ValueError
 
     def __str__(self):
         if self.imag < 0:
             if isinstance(self.real, float):
                 return "%f%fj" % (self.real, self.imag)
             else:
-                return "%d%d" % (self.real, self.imag)
+                return "%d%dj" % (self.real, self.imag)
         else:
             if isinstance(self.real, float):
                 return "%f+%fj" % (self.real, self.imag)
             else:
-                return "%d+%d" % (self.real, self.imag)
+                return "%d+%dj" % (self.real, self.imag)
+
+    def __eq__(self, other):
+        if self.real == other.real and self.imag == other.imag:
+            return
 
     def __add__(self, complex_b):
         if isinstance(complex_b, int) or isinstance(complex_b, float):
